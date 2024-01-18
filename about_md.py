@@ -9,6 +9,10 @@ about_md = f"""
 
 ## Release notes
 
+
+### 0.2
+- Another release
+
 ### 0.1
 - Second release
 
