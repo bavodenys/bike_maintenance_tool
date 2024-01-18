@@ -18,19 +18,16 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Create virtual environment
+    - name: Install dependencies and execute flet pack
       run: |
         python -m venv venv
         source venv/bin/activate
-
-    - name: Install dependencies
-      run: |
         pip install -r requirements.txt  # Replace with your requirements file if needed
-
-    - name: Execute flet pack
-      run: |
         flet pack main.py
-
-    - name: Cleanup
-      run: |
         deactivate  # Deactivate the virtual environment
+
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Bike maintenance tool
+        path: dist/main.exe
