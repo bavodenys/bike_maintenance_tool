@@ -11,7 +11,7 @@ about_md = f"""
 
 
 ### 0.2
-- Another release
+- Another release!
 
 ### 0.1
 - Second release
