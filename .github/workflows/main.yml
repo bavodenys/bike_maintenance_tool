@@ -52,13 +52,14 @@ jobs:
         flet pack main.py
         deactivate  # Deactivate the virtual environment
 
-    - name: Download and Install NSIS
-      run: |
-        $nsisPath = "$env:USERPROFILE\nsis"
-        New-Item -ItemType Directory -Path $nsisPath -Force
-        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/nsis/nsis-3.06.1-setup.exe' -OutFile $nsisPath\nsis-setup.exe
-        Start-Process -Wait -FilePath "$nsisPath\nsis-setup.exe" -ArgumentList '/S'
-
+    - name: Install NSIS
+      # You may pin to the exact commit or the version.
+      # uses: repolevedavaj/install-nsis@ec679f227a9820f1ffedd9563648d257a6fc4649
+      uses: repolevedavaj/install-nsis@v1.0.1
+      with:
+        # The version of NSIS to install
+        nsis-version: 3.09
+          
     - name: Compile NSIS Script
       run: |
         & 'C:\Program Files (x86)\NSIS\makensis.exe' installer_files/windows_installer.nsi
