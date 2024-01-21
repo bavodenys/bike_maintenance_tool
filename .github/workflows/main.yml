@@ -23,7 +23,7 @@ jobs:
         python -m venv venv
         source venv/bin/activate
         pip install -r requirements.txt  # Replace with your requirements file if needed
-        flet pack main.py
+        flet pack main.py --name bike_maintenance_tool
         deactivate  # Deactivate the virtual environment
 
     - name: Publish Artifact for Linux
@@ -49,7 +49,7 @@ jobs:
         python -m venv venv
         .\venv\Scripts\Activate  # Activate virtual environment on Windows
         pip install -r requirements.txt  # Replace with your requirements file if needed
-        flet pack main.py
+        flet pack main.py --name bike_maintenance_tool
         deactivate  # Deactivate the virtual environment
 
     - name: Install NSIS
