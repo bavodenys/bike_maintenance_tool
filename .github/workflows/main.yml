@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Bike maintenance tool - Linux
-        path: dist/main
+        path: dist/bike_maintenance_tool
 
   build-windows:
     runs-on: windows-latest
