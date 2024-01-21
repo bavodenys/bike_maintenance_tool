@@ -11,7 +11,7 @@ Page instfiles
 
 Section
   SetOutPath $INSTDIR
-  File "dist\${APP_EXECUTABLE_NAME}"
+  File "${srcdir}\..\dist\bike_maintenance_tool.exe"
 SectionEnd
 
 Section "Start Menu Shortcuts"
