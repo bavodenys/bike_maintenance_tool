@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +26,34 @@ jobs:
         flet pack main.py
         deactivate  # Deactivate the virtual environment
 
-    - name: Publish Artifact
+    - name: Publish Artifact for Linux
       uses: actions/upload-artifact@v2
       with:
-        name: Bike maintenance tool
+        name: Bike maintenance tool - Linux
+        path: dist/main
+
+  build-windows:
+    runs-on: windows-latest  # Use a Windows runner for this job
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies and execute flet pack
+      run: |
+        python -m venv venv
+        .\venv\Scripts\Activate  # Activate virtual environment on Windows
+        pip install -r requirements.txt  # Replace with your requirements file if needed
+        flet pack main.py
+        deactivate  # Deactivate the virtual environment
+
+    - name: Publish Artifact for Windows
+      uses: actions/upload-artifact@v2
+      with:
+        name: Bike maintenance tool - Windows
         path: dist/main
