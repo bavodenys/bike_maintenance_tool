@@ -54,9 +54,10 @@ jobs:
 
     - name: Download and Install NSIS
       run: |
-        mkdir -p $HOME/nsis
-        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/nsis/nsis-3.06.1-setup.exe' -OutFile $HOME/nsis/nsis-setup.exe
-        Start-Process -Wait -FilePath $HOME/nsis/nsis-setup.exe -ArgumentList '/S'
+        $nsisPath = "$env:USERPROFILE\nsis"
+        New-Item -ItemType Directory -Path $nsisPath -Force
+        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/nsis/nsis-3.06.1-setup.exe' -OutFile $nsisPath\nsis-setup.exe
+        Start-Process -Wait -FilePath "$nsisPath\nsis-setup.exe" -ArgumentList '/S'
 
     - name: Compile NSIS Script
       run: |
