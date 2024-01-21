@@ -17,20 +17,30 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
+        
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
+    - name: Install Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.10.0'  # Specify the version you want to install
+        
     - name: Install dependencies and execute flet pack
       run: |
         python -m venv venv
         source venv/bin/activate
         pip install -r requirements.txt  # Replace with your requirements file if needed
-        flet pack main.py
+        flet pack main.py --name bike_maintenance_tool
         deactivate  # Deactivate the virtual environment
 
     - name: Publish Artifact for Linux
       uses: actions/upload-artifact@v2
       with:
         name: Bike maintenance tool - Linux
-        path: dist/main
+        path: dist/bike_maintenance_tool
 
   build-windows:
     runs-on: windows-latest
