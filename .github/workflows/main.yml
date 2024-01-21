@@ -33,7 +33,7 @@ jobs:
         path: dist/main
 
   build-windows:
-    runs-on: windows-latest  # Use a Windows runner for this job
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
@@ -52,8 +52,18 @@ jobs:
         flet pack main.py
         deactivate  # Deactivate the virtual environment
 
+    - name: Download and Install NSIS
+      run: |
+        mkdir -p $HOME/nsis
+        Invoke-WebRequest -Uri 'https://prdownloads.sourceforge.net/nsis/nsis-3.06.1-setup.exe' -OutFile $HOME/nsis/nsis-setup.exe
+        Start-Process -Wait -FilePath $HOME/nsis/nsis-setup.exe -ArgumentList '/S'
+
+    - name: Compile NSIS Script
+      run: |
+        & 'C:\Program Files (x86)\NSIS\makensis.exe' installer_files/windows_installer.nsi
+
     - name: Publish Artifact for Windows
       uses: actions/upload-artifact@v2
       with:
-        name: Bike maintenance tool - Windows
-        path: dist/main.exe
+        name: Bike maintenance tool - Windows Installer
+        path: .
