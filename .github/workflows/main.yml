@@ -32,7 +32,6 @@ jobs:
       with:
         flutter-version: '2.10.0'  # Adjust the version as needed
 
-        
     - name: Install dependencies and execute flet pack
       run: |
         python -m venv venv
@@ -40,6 +39,9 @@ jobs:
         pip install -r requirements.txt  # Replace with your requirements file if needed
         flet pack main.py --name bike_maintenance_tool
         deactivate  # Deactivate the virtual environment
+    
+    - name: Make binary executable
+      run: chmod +x ./dist/bike_maintenance_tool
 
     - name: Publish Artifact for Linux
       uses: actions/upload-artifact@v2
