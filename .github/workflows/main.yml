@@ -23,14 +23,14 @@ jobs:
         python -m venv venv
         source venv/bin/activate
         pip install -r requirements.txt  # Replace with your requirements file if needed
-        flet pack main.py --name bike_maintenance_tool
+        flet pack main.py
         deactivate  # Deactivate the virtual environment
 
     - name: Publish Artifact for Linux
       uses: actions/upload-artifact@v2
       with:
         name: Bike maintenance tool - Linux
-        path: dist/bike_maintenance_tool
+        path: dist/main
 
   build-windows:
     runs-on: windows-latest
