@@ -27,7 +27,7 @@ jobs:
         deactivate  # Deactivate the virtual environment
     
     - name: Make binary executable
-      run: chmod +x ./dist/bike_maintenance_tool
+      run: chmod a+x ./dist/bike_maintenance_tool
 
     - name: Publish Artifact for Linux
       uses: actions/upload-artifact@v2
