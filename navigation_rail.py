@@ -63,6 +63,6 @@ class MyNavigationRail(ft.NavigationRail):
         elif index == 5:
             self.page.go("/about")
         elif index == 6:
-            print("Exit clicked")
+            self.page.go("/exit")
         else:
             pass

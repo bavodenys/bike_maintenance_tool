@@ -5,7 +5,9 @@ from update_dialog import *
 from calibrations import *
 from about_md import *
 from settings_view import *
-
+from rides_view import *
+from add_ride_view import *
+import logging
 
 AppBar = ft.AppBar(
         title=ft.Text(f"{TOOL_NAME} {MAJOR_VERSION}.{MINOR_VERSION}"),
@@ -16,8 +18,7 @@ AppBar = ft.AppBar(
 
 def main(page: ft.Page):
     page.title = f"{TOOL_NAME} {MAJOR_VERSION}.{MINOR_VERSION}"
-    page.client_storage.set("distance_gain", 1)
-    rides_text = ft.Ref[ft.Text]()
+    logging.basicConfig(level=logging.DEBUG)
 
     # Check for update of the tool
     if check_for_update(MAJOR_VERSION, MINOR_VERSION):
@@ -56,7 +57,25 @@ def main(page: ft.Page):
                             [
                                 MyNavigationRail(1),
                                 ft.VerticalDivider(width=1),
-                                ft.Column([ft.Text(ref=rides_text, value=f'Rides: distance {distance_conversion(5, page.client_storage.get("distance_gain"))} {metric_system.value}')], alignment=ft.MainAxisAlignment.START, expand=True),
+                                ft.Column([rides_row], alignment=ft.MainAxisAlignment.START, expand=True),
+                            ],
+                            expand=True,
+                        ),
+                    ],
+                )
+            )
+        if page.route == "/rides/add":
+            page.views.append(
+                ft.View(
+                    "/rides",
+
+                    [
+                        AppBar,
+                        ft.Row(
+                            [
+                                MyNavigationRail(1),
+                                ft.VerticalDivider(width=1),
+                                ft.Column([add_ride_row], alignment=ft.MainAxisAlignment.START, expand=True),
                             ],
                             expand=True,
                         ),
@@ -135,13 +154,18 @@ def main(page: ft.Page):
                     ],
                 )
             )
+        if page.route == "/exit":
+            print('save data')
+            page.window_destroy()
 
         page.update()
+        page.overlay.append(date_picker)
 
     def view_pop(view):
         page.views.pop()
-        top_view = page.views[-1]
-        page.go(top_view.route)
+        if not page.views:
+            top_view = page.views[-1]
+            page.go(top_view.route)
 
 
     page.on_route_change = route_changed
