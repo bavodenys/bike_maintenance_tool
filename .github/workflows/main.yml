@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout code
@@ -27,13 +27,16 @@ jobs:
         deactivate  # Deactivate the virtual environment
     
     - name: Make binary executable
-      run: chmod +x ./dist/bike_maintenance_tool
+      run: chmod a+x ./dist/bike_maintenance_tool
+
+    - name: Create tar file
+      run: tar czf bike_maintenance_tool.tar.gz -C ./dist bike_maintenance_tool
 
     - name: Publish Artifact for Linux
       uses: actions/upload-artifact@v2
       with:
         name: Bike maintenance tool - Linux
-        path: dist/bike_maintenance_tool
+        path: bike_maintenance_tool.tar.gz
 
   build-windows:
     runs-on: windows-latest
